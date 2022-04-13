@@ -2,6 +2,8 @@ package com.itiscaleb.client;
 
 import com.itiscaleb.Dragoon;
 import com.itiscaleb.client.model.LanceModel;
+import com.itiscaleb.client.renderer.LancePlayerRenderer;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.model.IBakedModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
@@ -17,9 +19,13 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 @Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 @OnlyIn(Dist.CLIENT)
 public class Setup {
+
+    public static LancePlayerRenderer renderer;
+
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent e){
         ClientRegistry.registerKeyBinding(KeyBindingConfig.abilityMenu);
+        renderer = new LancePlayerRenderer(Minecraft.getInstance().getRenderManager());
     }
 
     @SubscribeEvent
