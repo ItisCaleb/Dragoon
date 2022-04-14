@@ -1,5 +1,6 @@
 package com.itiscaleb.capability.dragoon;
 
+import com.itiscaleb.item.misc.materia.SkillMateriaCrystal;
 import com.itiscaleb.network.DragoonAbilityPacket;
 import com.itiscaleb.network.NetworkHandler;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -18,11 +19,6 @@ public class DragoonAbility implements IDragoonAbility {
     @CapabilityInject(IDragoonAbility.class)
     public static final Capability<IDragoonAbility> CAPABILITY = null;
 
-    public static DragoonSkill[] SKILLS = {
-            DragoonSkill.TrueThrust
-    };
-
-
     private boolean isSoulEquiped;
     private int dragoonStage;
     private float jumpforce;
@@ -32,7 +28,7 @@ public class DragoonAbility implements IDragoonAbility {
         isSoulEquiped = false;
         dragoonStage = 0;
         jumpforce = 0f;
-        skillList = new ArrayList<>();
+        skillList = new ArrayList<>(5);
     }
 
     public boolean isSoulEquiped(){
@@ -52,6 +48,11 @@ public class DragoonAbility implements IDragoonAbility {
     public void setSkillList(ArrayList<Integer> list) {
         skillList = list;
     }
+
+    public SkillMateriaCrystal getSkill() {
+        return null;
+    }
+
 
     public int getStageNum(){
         return dragoonStage;
@@ -107,15 +108,6 @@ public class DragoonAbility implements IDragoonAbility {
 
     public void syncServer(){
         NetworkHandler.Instance.sendToServer(new DragoonAbilityPacket(this));
-    }
-
-    public enum DragoonSkill{
-        TrueThrust("True Thrust");
-
-        public String name;
-        DragoonSkill(String name) {
-            this.name=name;
-        }
     }
 
     public enum DragoonStage{

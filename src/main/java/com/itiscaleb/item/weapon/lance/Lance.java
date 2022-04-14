@@ -4,6 +4,9 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.itiscaleb.Dragoon;
 import com.itiscaleb.DragoonGroup;
+import com.itiscaleb.capability.dragoon.DragoonAbility;
+import com.itiscaleb.item.DragoonItems;
+import com.itiscaleb.item.misc.materia.SkillMateriaCrystal;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.IVanishable;
 import net.minecraft.entity.ai.attributes.Attribute;
@@ -13,7 +16,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeMod;
 
@@ -34,10 +36,16 @@ public class Lance extends Item implements IVanishable {
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if(handIn == Hand.MAIN_HAND){
             if(!worldIn.isRemote()){
-                playerIn.sendMessage(new StringTextComponent("bruh"), UUID.randomUUID());
+                playerIn.getCapability(DragoonAbility.CAPABILITY)
+                        .ifPresent(ability -> {
+                            if(ability.isSoulEquiped()){
+                                SkillMateriaCrystal crystal = (SkillMateriaCrystal) DragoonItems.TrueTrustMateria;
+                                crystal.executeSkill(playerIn);
+                            }
+                        });
             }
         }
-        return ActionResult.resultFail(playerIn.getHeldItem(handIn));
+        return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
     }
 
     @Override

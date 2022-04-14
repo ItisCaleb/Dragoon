@@ -1,5 +1,6 @@
 package com.itiscaleb.capability.dragoon;
 
+import com.itiscaleb.item.misc.materia.SkillMateriaCrystal;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -15,6 +16,8 @@ public interface IDragoonAbility extends INBTSerializable<CompoundNBT> {
     void setStage(int stage);
 
     void setSkillList(ArrayList<Integer> list);
+
+    SkillMateriaCrystal getSkill();
 
     int getStageNum();
 

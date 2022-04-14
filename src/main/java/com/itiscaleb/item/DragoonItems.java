@@ -2,6 +2,7 @@ package com.itiscaleb.item;
 
 import com.itiscaleb.item.armor.dragonblood.DragonBloodArmor;
 import com.itiscaleb.item.misc.SoulOfTheDragoon;
+import com.itiscaleb.item.misc.materia.dragoon.TrueThrustMateria;
 import com.itiscaleb.item.weapon.lance.WoodenLance;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
@@ -16,4 +17,7 @@ public class DragoonItems {
     //items
     public static final Item SoulOfTheDragoon = new SoulOfTheDragoon();
     public static final Item WoodenLance = new WoodenLance();
+
+    //materia
+    public static final Item TrueTrustMateria = new TrueThrustMateria();
 }
