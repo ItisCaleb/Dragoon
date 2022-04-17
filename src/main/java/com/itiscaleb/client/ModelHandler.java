@@ -1,6 +1,6 @@
 package com.itiscaleb.client;
 
-import com.itiscaleb.item.weapon.lance.Lance;
+import com.itiscaleb.common.item.weapon.lance.Lance;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.entity.Pose;
@@ -24,7 +24,7 @@ public class ModelHandler {
                 MatrixStack stack = e.getMatrixStack();
                 AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) p;
                 float tick = e.getPartialRenderTick();
-                Setup.renderer.render(player,player.getYaw(tick),tick,stack,e.getBuffers(),light);
+                ClientSetup.renderer.render(player,player.getYaw(tick),tick,stack,e.getBuffers(),light);
                 e.setCanceled(true);
             }
         }

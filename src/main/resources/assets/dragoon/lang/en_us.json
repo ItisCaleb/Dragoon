@@ -9,5 +9,11 @@
   "item.dragoon.soul_of_the_dragoon": "Soul of the Dragoon",
   "item.dragoon.wooden_lance": "Wooden Lance",
 
+  "item.dragoon.true_thrust_materia": "True Thrust Materia",
+  "item.dragoon.wheeling_thrust_materia": "Wheeling Thrust Materia",
+
+  "skill.dragoon.true_thrust_materia": "True Thrust",
+  "skill.dragoon.wheeling_thrust_materia": "Wheeling Thrust",
+
   "key.category.dragoon": "Dragoon"
 }

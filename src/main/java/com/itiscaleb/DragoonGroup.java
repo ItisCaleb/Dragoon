@@ -1,6 +1,6 @@
 package com.itiscaleb;
 
-import com.itiscaleb.item.DragoonItems;
+import com.itiscaleb.common.item.DragoonItems;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 

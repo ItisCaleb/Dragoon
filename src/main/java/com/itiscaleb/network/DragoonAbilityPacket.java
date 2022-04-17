@@ -1,13 +1,12 @@
 package com.itiscaleb.network;
 
-import com.itiscaleb.capability.dragoon.DragoonAbility;
+import com.itiscaleb.common.capability.dragoon.DragoonAbility;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;

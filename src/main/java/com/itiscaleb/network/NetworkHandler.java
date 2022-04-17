@@ -1,7 +1,6 @@
 package com.itiscaleb.network;
 
 import com.itiscaleb.Dragoon;
-import com.itiscaleb.capability.dragoon.DragoonAbility;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -15,9 +14,13 @@ public class NetworkHandler {
             PROTOCOL_VERSION::equals
     );
     public static void register(){
-        Instance.registerMessage(0, DragoonAbilityPacket.class
-                ,DragoonAbilityPacket::encode
-                ,DragoonAbilityPacket::new
-                ,DragoonAbilityPacket::handle);
+        Instance.registerMessage(0, DragoonAbilityPacket.class,
+                DragoonAbilityPacket::encode,
+                DragoonAbilityPacket::new,
+                DragoonAbilityPacket::handle);
+        Instance.registerMessage(1,ExtendReachPacket.class,
+                ExtendReachPacket::encode,
+                ExtendReachPacket::new,
+                ExtendReachPacket::handle);
     }
 }
