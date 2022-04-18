@@ -80,6 +80,9 @@ public class DragoonAbility implements IDragoonAbility {
     @Override
     public void cleanLearnedSkill() {
         learnedSkill.clear();
+        for(int i=0;i<5;i++){
+            skillList[i] = null;
+        }
     }
 
     public int getStageNum(){

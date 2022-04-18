@@ -9,6 +9,7 @@ import com.itiscaleb.common.item.DragoonItems;
 import com.itiscaleb.common.item.misc.materia.SkillMateriaCrystal;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.IVanishable;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -26,8 +27,6 @@ import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class Lance extends Item implements IVanishable {
-
-    public static UUID uuid = UUID.fromString("ce6f87be-be50-47cb-b557-6894dce12c58");
 
     private final float attackDamage;
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
@@ -51,20 +50,57 @@ public class Lance extends Item implements IVanishable {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         if(handIn == Hand.MAIN_HAND){
-            if(!worldIn.isRemote()){
-                playerIn.getCapability(DragoonAbility.CAPABILITY)
-                        .ifPresent(ability -> {
-                            if(ability.isSoulEquiped()){
-                                SkillMateriaCrystal crystal = ability.getSkill(0);
-                                if(crystal!=null){
-                                    crystal.executeSkill(playerIn);
-                                }
+            playerIn.setActiveHand(handIn);
+        }
+        return ActionResult.resultConsume(playerIn.getHeldItem(handIn));
+    }
+
+    @Override
+    public void onPlayerStoppedUsing(@Nonnull ItemStack stack, World worldIn, @Nonnull LivingEntity entityLiving, int timeLeft) {
+        if(!worldIn.isRemote()){
+            PlayerEntity playerIn = (PlayerEntity) entityLiving;
+            playerIn.getCapability(DragoonAbility.CAPABILITY)
+                    .ifPresent(ability -> {
+                        if(ability.isSoulEquiped()){
+                            SkillMateriaCrystal crystal;
+                            if(playerIn.isCrouching()){
+                                crystal = ability.getSkill(1);
+                            }else if(!playerIn.isOnGround()){
+                                crystal = ability.getSkill(2);
+                            }else if(playerIn.isSprinting()){
+                                crystal = ability.getSkill(3);
+                            }else crystal = ability.getSkill(0);
+                            if(crystal!=null){
+                                crystal.executeSkill(playerIn);
                             }
-                        });
-            }
+                        }
+                    });
             playerIn.getCooldownTracker().setCooldown(this,30);
         }
-        return ActionResult.resultSuccess(playerIn.getHeldItem(handIn));
+    }
+
+    @Nonnull
+    @Override
+    public ItemStack onItemUseFinish(@Nonnull ItemStack stack, World worldIn, @Nonnull LivingEntity entityLiving) {
+        if(!worldIn.isRemote()){
+            PlayerEntity playerIn = (PlayerEntity) entityLiving;
+            playerIn.getCapability(DragoonAbility.CAPABILITY)
+                    .ifPresent(ability -> {
+                        if(ability.isSoulEquiped()){
+                            SkillMateriaCrystal crystal = ability.getSkill(4);
+                            if(crystal!=null){
+                                crystal.executeSkill(playerIn);
+                            }
+                        }
+                    });
+            playerIn.getCooldownTracker().setCooldown(this,30);
+        }
+        return stack;
+    }
+
+    @Override
+    public int getUseDuration(ItemStack stack) {
+        return 40;
     }
 
     @Override

@@ -34,6 +34,7 @@ public class DragoonConfig extends Screen {
     IDragoonAbility ability;
     ArrayList<SkillSlotGui> learnedSkill;
     ArrayList<SkillSlotGui> equipedSkill;
+    int selectedIndex = 0;
 
     public DragoonConfig() {
         super(new StringTextComponent("Ability Setting Menu"));
@@ -97,13 +98,10 @@ public class DragoonConfig extends Screen {
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
         int x = (this.width / 2 - 100)/2;
         int i = 0;
-        for (SkillMateriaCrystal crystal:ability.getSkills()){
+        for (SkillMateriaCrystal ignored :ability.getSkills()){
             if (isSlotSelected(x,15,mouseX,mouseY)){
-                if(crystal != null){
-                    skillSlot.get(crystal.getRegistryName().toString()).setUsed(false);
-                    ability.setSkillSlot(i,null);
-                    equipedSkill.set(i,EMPTYSKILL.clone());
-                }
+                selectedIndex = i;
+                
             }
             x += 19;
             i++;
@@ -112,8 +110,8 @@ public class DragoonConfig extends Screen {
         i=0;
         for (SkillSlotGui learnSlot : this.learnedSkill) {
             if (isSlotSelected(x,35,mouseX,mouseY)){
-                ability.setSkillSlot(0, DragoonItems.SKILL_MATERIA.get(ability.getLearnedSkill().get(i)));
-                equipedSkill.set(0,learnSlot.clone());
+                ability.setSkillSlot(selectedIndex, DragoonItems.SKILL_MATERIA.get(ability.getLearnedSkill().get(i)));
+                equipedSkill.set(selectedIndex,learnSlot.clone());
             }
             x += 19;
             i++;
