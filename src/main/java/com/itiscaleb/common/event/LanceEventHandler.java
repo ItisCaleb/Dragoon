@@ -1,7 +1,7 @@
 package com.itiscaleb.common.event;
 
 import com.itiscaleb.common.item.weapon.lance.Lance;
-import com.itiscaleb.network.ExtendReachPacket;
+import com.itiscaleb.network.AttackEntityPacket;
 import com.itiscaleb.network.NetworkHandler;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
@@ -31,7 +31,7 @@ public class LanceEventHandler {
             AxisAlignedBB axisalignedbb = player.getBoundingBox().expand(start.scale(d0)).grow(1.0D, 1.0D, 1.0D);
             EntityRayTraceResult r = ProjectileHelper.rayTraceEntities(player,eyePosition,end,axisalignedbb, entity -> !entity.isSpectator() && entity.canBeCollidedWith(),d0*d0);
             if(r!=null){
-                NetworkHandler.Instance.sendToServer(new ExtendReachPacket(r.getEntity().getEntityId(),lance.getAttackDamage()));
+                NetworkHandler.Instance.sendToServer(new AttackEntityPacket(r.getEntity().getEntityId(),lance.getAttackDamage()));
             }
         }
     }

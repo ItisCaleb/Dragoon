@@ -18,9 +18,13 @@ public class NetworkHandler {
                 DragoonAbilityPacket::encode,
                 DragoonAbilityPacket::new,
                 DragoonAbilityPacket::handle);
-        Instance.registerMessage(1,ExtendReachPacket.class,
-                ExtendReachPacket::encode,
-                ExtendReachPacket::new,
-                ExtendReachPacket::handle);
+        Instance.registerMessage(1, AttackEntityPacket.class,
+                AttackEntityPacket::encode,
+                AttackEntityPacket::new,
+                AttackEntityPacket::handle);
+        Instance.registerMessage(2, ServerSkillPacket.class,
+                ServerSkillPacket::encode,
+                ServerSkillPacket::new,
+                ServerSkillPacket::handle);
     }
 }

@@ -40,6 +40,9 @@ public class DragoonConfig extends Screen {
         super(new StringTextComponent("Ability Setting Menu"));
         skillSlot.put("dragoon:true_thrust_materia",new SkillSlotGui(0f,0f));
         skillSlot.put("dragoon:wheeling_thrust_materia",new SkillSlotGui(32f,0f));
+        skillSlot.put("dragoon:dragonfire_dive_materia",new SkillSlotGui(64f,0f));
+        skillSlot.put("dragoon:star_dive_materia",new SkillSlotGui(96f,0f));
+
     }
 
     @Override

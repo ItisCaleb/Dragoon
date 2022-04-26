@@ -3,6 +3,9 @@ package com.itiscaleb.common.item.misc.materia;
 import com.itiscaleb.Dragoon;
 import com.itiscaleb.DragoonGroup;
 import com.itiscaleb.common.capability.dragoon.DragoonAbility;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -10,10 +13,13 @@ import net.minecraft.item.Rarity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -23,7 +29,12 @@ public class SkillMateriaCrystal extends Item {
         setRegistryName(Dragoon.MODID,name+"_materia");
     }
 
-    public boolean executeSkill(PlayerEntity player){
+    public boolean executeSkill(PlayerEntity playerIn){
+        SkillHelper.executeServerSkill(playerIn,this);
+        return true;
+    }
+
+    public boolean executeServerSkill(PlayerEntity playerIn, LivingEntity entityIn){
         return true;
     }
 
@@ -51,5 +62,10 @@ public class SkillMateriaCrystal extends Item {
             }
         });
         return result.get();
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World worldIn, List<ITextComponent> tooltip, ITooltipFlag flagIn) {
+        tooltip.add(new TranslationTextComponent("skill.dragoon."+stack.getItem().getRegistryName().getPath()));
     }
 }

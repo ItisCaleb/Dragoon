@@ -11,9 +11,13 @@
 
   "item.dragoon.true_thrust_materia": "True Thrust Materia",
   "item.dragoon.wheeling_thrust_materia": "Wheeling Thrust Materia",
+  "item.dragoon.dragonfire_dive_materia": "Dragonfire Dive Materia",
+  "item.dragoon.star_dive_materia": "Star Dive Materia",
 
   "skill.dragoon.true_thrust_materia": "True Thrust",
   "skill.dragoon.wheeling_thrust_materia": "Wheeling Thrust",
+  "skill.dragoon.dragonfire_dive_materia": "Dragonfire Dive",
+  "skill.dragoon.star_dive_materia": "Star Dive",
 
   "key.category.dragoon": "Dragoon"
 }

@@ -1,24 +1,27 @@
 package com.itiscaleb.common.item.misc.materia;
 
-import com.itiscaleb.Dragoon;
-import com.itiscaleb.network.ExtendReachPacket;
+import com.itiscaleb.network.DragoonAbilityPacket;
 import com.itiscaleb.network.NetworkHandler;
-import net.minecraft.client.Minecraft;
+import com.itiscaleb.network.ServerSkillPacket;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ProjectileHelper;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.List;
 
 public class SkillHelper {
     public interface Skill{
-        boolean skillHandler(LivingEntity entity);
+        void skillHandler(LivingEntity entity);
     }
     final static Vector3d LEFT_CORNER = new Vector3d(-1,-1,-1);
-    final static Vector3d RIGHT_CORNER = new Vector3d(1,1,1);
+    final static Vector3d RIGHT_CORNER = new Vector3d(1,2,1);
 
     public static List<LivingEntity> getEntityInRange(PlayerEntity player, double range){
         Vector3d p1 = LEFT_CORNER.mul(range,1,range).add(player.getPositionVec());
@@ -91,7 +94,9 @@ public class SkillHelper {
         double sqRange = range * range;
         for (LivingEntity entity:list){
             if(!entity.isEntityEqual(player)){
-                if(player.getDistanceSq(entity) <= sqRange){
+                Vector3d disVec = entity.getPositionVec().subtract(player.getPositionVec());
+                double distance = disVec.x * disVec.x + disVec.z * disVec.z;
+                if(distance <= sqRange){
                     skill.skillHandler(entity);
                 }
             }
@@ -106,7 +111,9 @@ public class SkillHelper {
         double sqRange = range * range;
         for (LivingEntity entity:list){
             if(!entity.isEntityEqual(player)){
-                if(pos.squareDistanceTo(entity.getPositionVec()) <= sqRange){
+                Vector3d disVec = pos.subtract(player.getPositionVec());
+                double distance = disVec.x * disVec.x + disVec.z * disVec.z;
+                if(distance <= sqRange){
                     skill.skillHandler(entity);
                 }
             }
@@ -132,7 +139,9 @@ public class SkillHelper {
                 //cosΘ = vec·lookvec/(|vec|*|lookvec|)
                 double cos = vec.dotProduct(lookVec)/vec.length()/lookVec.length();
                 double rad = Math.acos(cos);
-                if(player.getDistanceSq(entity) <= sqRange && min < rad && rad < max){
+                Vector3d disVec = entity.getPositionVec().subtract(player.getPositionVec());
+                double distance = disVec.x * disVec.x + disVec.z * disVec.z;
+                if(distance <= sqRange && min < rad && rad < max){
                     skill.skillHandler(entity);
                 }
             }
@@ -155,6 +164,20 @@ public class SkillHelper {
         }
     }
 
+    public static LivingEntity getRayTraceEntity(PlayerEntity player, double range){
+        Vector3d eyePosition = player.getEyePosition(1);
+        Vector3d start = player.getLookVec();
+        Vector3d end = eyePosition.add(start.x * range, start.y * range, start.z * range);
+        AxisAlignedBB axisalignedbb = player.getBoundingBox().expand(start.scale(range)).grow(1.0D, 1.0D, 1.0D);
+        EntityRayTraceResult r = ProjectileHelper.rayTraceEntities(player,eyePosition,end,axisalignedbb, entity -> !entity.isSpectator() && entity.canBeCollidedWith(),range*range);
+        if(r!=null){
+            if(r.getEntity() instanceof LivingEntity){
+                return (LivingEntity) r.getEntity();
+            }
+        }
+        return null;
+    }
+
     /**
      * Get first block within range
      */
@@ -169,4 +192,18 @@ public class SkillHelper {
         }
         return null;
     }
+
+    public static void attackEntity(PlayerEntity player, LivingEntity entity, float attackDamage){
+        entity.attackEntityFrom(DamageSource.causePlayerDamage(player),attackDamage);
+    }
+
+    public static void executeServerSkill(PlayerEntity player, LivingEntity entity, SkillMateriaCrystal crystal){
+        NetworkHandler.Instance.sendToServer(new ServerSkillPacket(entity.getEntityId(),crystal.getRegistryName().toString()));
+    }
+
+    public static void executeServerSkill(PlayerEntity player, SkillMateriaCrystal crystal){
+        NetworkHandler.Instance.sendToServer(new ServerSkillPacket(-1,crystal.getRegistryName().toString()));
+    }
+
+
 }

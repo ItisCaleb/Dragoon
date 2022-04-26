@@ -46,7 +46,6 @@ public class DragoonAbilityHandler {
             p.getCapability(DragoonAbility.CAPABILITY,null)
                     .ifPresent(ability->{
                         if(ability.isSoulEquiped()){
-                            p.sendMessage(new StringTextComponent(ability.getStage().jumpBoost+""),UUID.randomUUID());
                             p.setMotion(p.getMotion().add(0,ability.getJumpForce(),0));
                         }
                     });

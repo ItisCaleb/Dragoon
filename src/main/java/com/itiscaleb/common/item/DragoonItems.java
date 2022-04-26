@@ -1,14 +1,16 @@
 package com.itiscaleb.common.item;
 
-import com.itiscaleb.Dragoon;
 import com.itiscaleb.common.item.armor.dragonblood.DragonBloodArmor;
 import com.itiscaleb.common.item.misc.SoulOfTheDragoon;
 import com.itiscaleb.common.item.misc.materia.SkillMateriaCrystal;
+import com.itiscaleb.common.item.misc.materia.dragoon.DragonfireDiveMateria;
+import com.itiscaleb.common.item.misc.materia.dragoon.StarDiveMateria;
 import com.itiscaleb.common.item.misc.materia.dragoon.TrueThrustMateria;
 import com.itiscaleb.common.item.misc.materia.dragoon.WheelingThrustMateria;
 import com.itiscaleb.common.item.weapon.lance.WoodenLance;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
+import net.minecraft.item.Rarity;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -31,21 +33,26 @@ public class DragoonItems {
     public static final Item WoodenLance = new WoodenLance();
 
     //materia
-    public static final Item TrueThrustMateria = new TrueThrustMateria();
-    public static final Item WheelingThrustMateria = new WheelingThrustMateria();
+    public static final Item TrueThrustMateria = new TrueThrustMateria("true_thrust", Rarity.UNCOMMON);
+    public static final Item WheelingThrustMateria = new WheelingThrustMateria("wheeling_thrust", Rarity.UNCOMMON);
+    public static final Item DragonFireDiveMateria = new DragonfireDiveMateria("dragonfire_dive",Rarity.EPIC);
+    public static final Item StarDiveMateria = new StarDiveMateria("star_dive",Rarity.EPIC);
+
 
     @SubscribeEvent
     public static void onItemRegistry(final RegistryEvent.Register<Item> e){
         IForgeRegistry<Item> reg = e.getRegistry();
-        reg.register(DragoonItems.DragonBloodHelmet);
-        reg.register(DragoonItems.DragonBloodChestplate);
-        reg.register(DragoonItems.DragonBloodLegs);
-        reg.register(DragoonItems.DragonBloodBoots);
-        reg.register(DragoonItems.SoulOfTheDragoon);
-        reg.register(DragoonItems.WoodenLance);
+        reg.register(DragonBloodHelmet);
+        reg.register(DragonBloodChestplate);
+        reg.register(DragonBloodLegs);
+        reg.register(DragonBloodBoots);
+        reg.register(SoulOfTheDragoon);
+        reg.register(WoodenLance);
         //materia
-        registerMateria(reg,DragoonItems.TrueThrustMateria);
-        registerMateria(reg,DragoonItems.WheelingThrustMateria);
+        registerMateria(reg,TrueThrustMateria);
+        registerMateria(reg,WheelingThrustMateria);
+        registerMateria(reg,DragonFireDiveMateria);
+        registerMateria(reg,StarDiveMateria);
     }
 
     private static void registerMateria(final IForgeRegistry<Item> reg, Item materia){

@@ -1,5 +1,6 @@
 package com.itiscaleb.network;
 
+import com.itiscaleb.Dragoon;
 import com.itiscaleb.common.capability.dragoon.DragoonAbility;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
@@ -13,16 +14,16 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class ExtendReachPacket {
+public class AttackEntityPacket {
     private final int entityId;
     private final float attackDamage;
 
-    public ExtendReachPacket(PacketBuffer buffer){
+    public AttackEntityPacket(PacketBuffer buffer){
         entityId = buffer.readInt();
         attackDamage = buffer.readFloat();
     }
 
-    public ExtendReachPacket(int entityId, float attackDamage){
+    public AttackEntityPacket(int entityId, float attackDamage){
         this.entityId = entityId;
         this.attackDamage = attackDamage;
     }
